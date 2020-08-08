@@ -1,0 +1,50 @@
+{
+  "name": "@uber/react-global-hooks",
+  "description": "react hooks that can be shared between components and other hooks or provide a common behavior in a custom hook that is shared between components and other hooks",
+  "author": "David Maskasky <dmaskask@uber.com>",
+  "contributors": [
+    "David Maskasky <dmaskask@uber.com>",
+    "Georgios Karnas <georgios@uber.com>"
+  ],
+  "version": "0.2.4",
+  "license": "MIT",
+  "main": "./dist-node-cjs/index.js",
+  "module": "./dist-node-esm/index.js",
+  "browser": {
+    "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
+    "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
+  },
+  "files": [
+    "dist-node-cjs",
+    "dist-node-esm",
+    "dist-browser-cjs",
+    "dist-browser-esm",
+    "src",
+    "!test"
+  ],
+  "scripts": {
+    "build": "cup-build",
+    "cup-build-tests": "cup build-tests",
+    "cup-clean": "cup clean",
+    "prepublish": "cup-build",
+    "publish": "npm publish"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-export-default-from": "^7.8.3",
+    "@babel/preset-flow": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/react-hooks": "^3.2.1",
+    "babel-plugin-version-inline": "^1.0.0",
+    "create-universal-package": "^4.1.0",
+    "react": "^16.13.1",
+    "react-test-renderer": "^16.13.1"
+  }
+}

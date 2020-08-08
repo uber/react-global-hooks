@@ -1,10 +1,52 @@
 {
-  "name": "react-global-hooks",
+  "name": "@uber/react-global-hooks",
   "version": "1.0.0",
   "description": "A library allowing to share state across react components ",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint modules/",
+    "flow": "flow check",
+    "test": "jest",
+    "test-cover": "jest --coverage",
+    "build": "lerna run build --npm-client=npm",
+    "lerna-build": "lerna run build --parallel",
+    "lerna-build:cjs": "lerna run build:cjs --parallel",
+    "lerna-build:esm": "lerna run build:esm --parallel",
+    "lerna-build:watch": "lerna run dev --parallel",
+    "lerna-publish": "lerna version",
+    "lerna-updated": "lerna updated",
+    "publish:all": "lerna run build --npm-client=npm && lerna run publish --npm-client=npm --no-bail",
+    "link-examples": "yarn build && ./scripts/link-examples.sh"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-export-default-from": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-flow": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/react-hooks": "^3.2.1",
+    "babel-plugin-version-inline": "^1.0.0",
+    "create-universal-package": "^4.1.0",
+    "jest": "^26.2.2",
+    "lerna": "^3.20.2",
+    "react-dom": "^16.12.0"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4"
+  },
+  "workspaces": [
+    "modules/*"
+  ],
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.8.0",
+    "yarn": ">=1.19.1"
   },
   "repository": {
     "type": "git",
@@ -14,7 +56,6 @@
     "react",
     "hooks"
   ],
-  "author": "diana.suvorova@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/uber/react-global-hooks/issues"
