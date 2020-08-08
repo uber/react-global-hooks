@@ -1,0 +1,23 @@
+{
+  "name": "react-global-hooks",
+  "version": "1.0.0",
+  "description": "A library allowing to share state across react components ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/uber/react-global-hooks.git"
+  },
+  "keywords": [
+    "react",
+    "hooks"
+  ],
+  "author": "diana.suvorova@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uber/react-global-hooks/issues"
+  },
+  "homepage": "https://github.com/uber/react-global-hooks#readme"
+}
