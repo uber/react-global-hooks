@@ -5,13 +5,12 @@
  *
  */
 
-
 // @flow
 import {useStoreMap} from './provider';
 
 export default function createSharedRef<T>(
   arg: T,
-  name: ?string = 'useSharedRef'
+  name: ?string = 'useSharedRef',
 ): Function {
   const symbol = Symbol(name);
   return function useSharedRef(): {current: T} {

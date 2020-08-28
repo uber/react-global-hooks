@@ -5,7 +5,6 @@
  *
  */
 
-
 // @flow
 
 /* globals __RGH_DEVTOOLS__ */
@@ -23,11 +22,11 @@ import type {
 } from './types.flow';
 import Store from './store';
 
-const defaultSelector = state => state;
+const defaultSelector = (state) => state;
 function createSharedReducer<State, Action>(
   reducer: ?ReducerFn<State, Action>,
   initialState: InitialStateRedux<State, Action>,
-  name: ?string = 'useSharedReducer'
+  name: ?string = 'useSharedReducer',
 ) {
   const symbol = Symbol(name);
   function useStore() {
@@ -51,7 +50,7 @@ function createSharedReducer<State, Action>(
     function useSelector<SelectedState = State>(
       selector?: ?SelectorFn<State, SelectedState>,
       equalityFn?: ?EqualityFn<SelectedState | State>,
-      timeVariationFn?: TimeVariationFn<State>
+      timeVariationFn?: TimeVariationFn<State>,
     ): SelectedState {
       // $FlowFixMe
       selector = typeof selector === 'function' ? selector : defaultSelector;
@@ -62,8 +61,8 @@ function createSharedReducer<State, Action>(
         current: selector(state),
       }));
       const listener = useCallback(
-        state => {
-          setState(curr => {
+        (state) => {
+          setState((curr) => {
             const {current} = curr;
             const next = selector(state);
             if (!equalityFn(current, next)) {
@@ -83,14 +82,14 @@ function createSharedReducer<State, Action>(
             }
           });
         },
-        [selector, equalityFn]
+        [selector, equalityFn],
       );
       const listenerTv = useMemo(
         () =>
           typeof timeVariationFn === 'function'
             ? timeVariationFn(listener)
             : listener,
-        [listener, timeVariationFn]
+        [listener, timeVariationFn],
       );
       // syncronous registration/unregistration when listener changes
       useWatched(() => {
@@ -104,7 +103,7 @@ function createSharedReducer<State, Action>(
         () => () => {
           listeners.delete(listenerTv);
         },
-        [listeners, listenerTv]
+        [listeners, listenerTv],
       );
       return selectedState.current;
     },

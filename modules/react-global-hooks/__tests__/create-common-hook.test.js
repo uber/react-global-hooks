@@ -38,7 +38,7 @@ function getSymbolName(symbol) {
 }
 function getValueBySymbolName(name, obj) {
   const symbolKey = Object.getOwnPropertySymbols(obj).find(
-    symbol => getSymbolName(symbol) === name
+    (symbol) => getSymbolName(symbol) === name,
   );
   return obj[symbolKey] || null;
 }
@@ -49,7 +49,7 @@ test('Verify common hooks are created only on first run', () => {
     <Provider value={storeMap}>{children}</Provider>
   );
   let value = 0;
-  const useCommonHookTest = createCommonHook(value => {
+  const useCommonHookTest = createCommonHook((value) => {
     return useCommonRef(value);
   });
   const {result, rerender} = renderHook(useCommonHookTest, {
@@ -82,8 +82,8 @@ test('Verify symbol registration for common hooks', () => {
   expect(Object.getOwnPropertySymbols(storeMap).length).toBe(8);
   expect(
     Object.getOwnPropertySymbols(storeMap)
-      .map(symbol => getSymbolName(symbol))
-      .every(description =>
+      .map((symbol) => getSymbolName(symbol))
+      .every((description) =>
         [
           'useCommonHook',
           'useCommonCallback',
@@ -93,8 +93,8 @@ test('Verify symbol registration for common hooks', () => {
           'useCommonRef',
           'useCommonState',
           'useSharedState',
-        ].includes(description)
-      )
+        ].includes(description),
+      ),
   ).toBe(true);
   rerender();
   expect(storeMap.length).toBe(1);
@@ -102,8 +102,8 @@ test('Verify symbol registration for common hooks', () => {
   expect(Object.getOwnPropertySymbols(storeMap).length).toBe(8);
   expect(
     Object.getOwnPropertySymbols(storeMap)
-      .map(symbol => getSymbolName(symbol))
-      .every(description =>
+      .map((symbol) => getSymbolName(symbol))
+      .every((description) =>
         [
           'useCommonHook',
           'useCommonCallback',
@@ -113,8 +113,8 @@ test('Verify symbol registration for common hooks', () => {
           'useCommonRef',
           'useCommonState',
           'useSharedState',
-        ].includes(description)
-      )
+        ].includes(description),
+      ),
   ).toBe(true);
 });
 
@@ -145,12 +145,12 @@ test('Verify the call order for common hooks of the same scope is preserved', ()
   const {callPositions} = getValueBySymbolName('useCommonHook', storeMap);
   expect(callPositions.length).toBe(6);
   expect(callPositions.every((fn, index) => fn.name === callOrder[index])).toBe(
-    true
+    true,
   );
   rerender();
   expect(callPositions.length).toBe(6);
   expect(callPositions.every((fn, index) => fn.name === callOrder[index])).toBe(
-    true
+    true,
   );
 });
 
@@ -198,11 +198,11 @@ test('Verify the call orders for common hooks of multiple scopes are preserved',
   function validate() {
     expect(callPositions1.length).toBe(callOrder1.length);
     expect(
-      callPositions1.every((fn, index) => fn.name === callOrder1[index])
+      callPositions1.every((fn, index) => fn.name === callOrder1[index]),
     ).toBe(true);
     expect(callPositions2.length).toBe(callOrder2.length);
     expect(
-      callPositions2.every((fn, index) => fn.name === callOrder2[index])
+      callPositions2.every((fn, index) => fn.name === callOrder2[index]),
     ).toBe(true);
   }
   validate();
@@ -290,17 +290,17 @@ test('Verify the call orders for common hooks of nested scopes are preserved', (
   function validate() {
     expect(callPositions1.length).toBe(callOrder1.length);
     expect(
-      callPositions1.every((fn, index) => fn.name === callOrder1[index])
+      callPositions1.every((fn, index) => fn.name === callOrder1[index]),
     ).toBe(true);
 
     expect(callPositions2.length).toBe(callOrder2.length);
     expect(
-      callPositions2.every((fn, index) => fn.name === callOrder2[index])
+      callPositions2.every((fn, index) => fn.name === callOrder2[index]),
     ).toBe(true);
 
     expect(callPositions3.length).toBe(callOrder3.length);
     expect(
-      callPositions3.every((fn, index) => fn.name === callOrder3[index])
+      callPositions3.every((fn, index) => fn.name === callOrder3[index]),
     ).toBe(true);
   }
   validate();
@@ -398,9 +398,9 @@ test('Verify the commonality of common hooks for a scope across rerenders', () =
 
   const refs = new Set(result.current);
   rerender();
-  expect(result.current.every(ref => refs.has(ref))).toBe(true);
+  expect(result.current.every((ref) => refs.has(ref))).toBe(true);
   rerender();
-  expect(result.current.every(ref => refs.has(ref))).toBe(true);
+  expect(result.current.every((ref) => refs.has(ref))).toBe(true);
 });
 
 test('Verify the commonality of common hooks for nested scopes', () => {
@@ -418,22 +418,22 @@ test('Verify the commonality of common hooks for nested scopes', () => {
     useCommonHookTest1,
     {
       wrapper,
-    }
+    },
   );
   const {result: result2, rerender: rerender2} = renderHook(
     useCommonHookTest2,
     {
       wrapper,
-    }
+    },
   );
 
   const refs = new Set(result1.current);
-  expect(result1.current.every(ref => refs.has(ref))).toBe(true);
-  expect(result2.current.every(ref => refs.has(ref))).toBe(true);
+  expect(result1.current.every((ref) => refs.has(ref))).toBe(true);
+  expect(result2.current.every((ref) => refs.has(ref))).toBe(true);
   rerender1();
-  expect(result1.current.every(ref => refs.has(ref))).toBe(true);
-  expect(result2.current.every(ref => refs.has(ref))).toBe(true);
+  expect(result1.current.every((ref) => refs.has(ref))).toBe(true);
+  expect(result2.current.every((ref) => refs.has(ref))).toBe(true);
   rerender2();
-  expect(result1.current.every(ref => refs.has(ref))).toBe(true);
-  expect(result2.current.every(ref => refs.has(ref))).toBe(true);
+  expect(result1.current.every((ref) => refs.has(ref))).toBe(true);
+  expect(result2.current.every((ref) => refs.has(ref))).toBe(true);
 });

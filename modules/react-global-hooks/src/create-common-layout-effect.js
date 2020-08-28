@@ -10,12 +10,12 @@ import {useLayoutEffect} from 'react';
 import {useStoreMap} from './provider';
 
 export default function createCommonLayoutEffect(
-  name = 'useCommonLayoutEffect'
+  name = 'useCommonLayoutEffect',
 ): Function {
   const symbol = Symbol(name);
   return function useCommonLayoutEffect<T>(
     fn: () => T,
-    args: Array<any> = []
+    args: Array<any> = [],
   ): void {
     const storeMap = useStoreMap();
     const firstRun = !(symbol in storeMap);

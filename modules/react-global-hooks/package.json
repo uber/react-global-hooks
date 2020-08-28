@@ -44,6 +44,7 @@
     "@testing-library/react-hooks": "^3.2.1",
     "babel-plugin-version-inline": "^1.0.0",
     "create-universal-package": "^4.1.0",
+    "prettier": "^2.1.1",
     "react": "^16.13.1",
     "react-test-renderer": "^16.13.1"
   }

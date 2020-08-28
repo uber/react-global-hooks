@@ -5,7 +5,6 @@
  *
  */
 
-
 // @flow
 import {type Scope} from './create-common-hook';
 

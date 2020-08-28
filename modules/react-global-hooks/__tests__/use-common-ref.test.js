@@ -21,7 +21,7 @@ const wrapper = ({children}) => (
 );
 
 test('Verify useCommonRef returns proper stucture when no arguments are passed', () => {
-  const useRefTest = createCommonHook(value => {
+  const useRefTest = createCommonHook((value) => {
     return useCommonRef(value);
   });
   const {result} = renderHook(useRefTest, {wrapper});
@@ -33,7 +33,7 @@ test('Verify useCommonRef returns proper stucture when no arguments are passed',
 });
 
 test('Verify referential integrity of ref across call positions', () => {
-  const useRefTest = createCommonHook(value => {
+  const useRefTest = createCommonHook((value) => {
     return useCommonRef(value);
   });
   const {result: result1, rerender: rerender1} = renderHook(useRefTest, {
@@ -51,7 +51,7 @@ test('Verify referential integrity of ref across call positions', () => {
 
 test('Verify args passed to useCommonRef are included in the return value', () => {
   const value = {};
-  const useRefTest = createCommonHook(value => {
+  const useRefTest = createCommonHook((value) => {
     return useCommonRef(value);
   });
   const {result, rerender} = renderHook(useRefTest, {
