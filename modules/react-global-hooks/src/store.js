@@ -26,7 +26,7 @@ class Store<State, Action = void> {
   constructor(
     reducer: ?ReducerFn<State, Action>,
     initialState: InitialState<State> | LazyState_NotAHook<State>,
-    name: ?string
+    name: ?string,
   ) {
     this.reducer = reducer;
     this.state =
@@ -35,7 +35,7 @@ class Store<State, Action = void> {
         : initialState;
     this.name = name;
   }
-  dispatch: Dispatch<Action> | SetState<State> = action => {
+  dispatch: Dispatch<Action> | SetState<State> = (action) => {
     if (typeof __RGH_DEVTOOLS__ !== 'undefined') {
       __RGH_DEVTOOLS__.componentCausedUpdate({
         name: this.name,
@@ -49,7 +49,7 @@ class Store<State, Action = void> {
         ? /* $FlowFixMe: dispatch falls back to setState if a reducer is not provided */
           action(this.state)
         : action;
-    this.listeners.forEach(listener => {
+    this.listeners.forEach((listener) => {
       listener(this.state);
     });
   };

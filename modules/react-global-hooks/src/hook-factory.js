@@ -5,19 +5,18 @@
  *
  */
 
-
 // @flow
 
 /* globals __RGH_DEVTOOLS__ */
 
 import {useStoreMap} from './provider';
 
-const hookFactory = createHook => (...args) => {
+const hookFactory = (createHook) => (...args) => {
   const storeMap = useStoreMap();
   const {currentScope} = storeMap;
   if (!currentScope) {
     throw new Error(
-      `Scope not found for ${createHook.name}. Check that the enclosing hook is wrapped by createCommonHook.`
+      `Scope not found for ${createHook.name}. Check that the enclosing hook is wrapped by createCommonHook.`,
     );
   }
   const {callPositions} = currentScope;

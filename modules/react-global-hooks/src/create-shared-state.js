@@ -12,12 +12,12 @@ import createSharedReducer from './create-shared-reducer';
 
 export default function createSharedState<State>(
   initialState: InitialState<State>,
-  name: ?string = 'useSharedState'
+  name: ?string = 'useSharedState',
 ) {
   const [useSelector, useSetState] = createSharedReducer<State, State>(
     null,
     initialState,
-    name
+    name,
   );
   return [useSelector, useSetState];
 }

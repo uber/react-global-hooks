@@ -154,10 +154,13 @@ test('Verify no rerenders are triggered when returning current state from a redu
 
 test('Verify initialState passes dispatch as prop when passed a callback', () => {
   let dispatchArg;
-  const [useSelector, useDispatch] = createSharedReducer(reducer, dispatch => {
-    dispatchArg = dispatch;
-    return store;
-  });
+  const [useSelector, useDispatch] = createSharedReducer(
+    reducer,
+    (dispatch) => {
+      dispatchArg = dispatch;
+      return store;
+    },
+  );
   function useTestState() {
     const state = useSelector();
     const dispatch = useDispatch();
@@ -170,9 +173,12 @@ test('Verify initialState passes dispatch as prop when passed a callback', () =>
 
 test('Verify initialState initializes with returned value when passed a callback', () => {
   let value = store;
-  const [useSelector, useDispatch] = createSharedReducer(reducer, dispatch => {
-    return store;
-  });
+  const [useSelector, useDispatch] = createSharedReducer(
+    reducer,
+    (dispatch) => {
+      return store;
+    },
+  );
   function useTestState() {
     const state = useSelector();
     const dispatch = useDispatch();
@@ -193,7 +199,7 @@ test('Verify initialState sets returned value when the passed callback and then 
   };
   const [useSelector, useDispatch] = createSharedReducer(
     reducerFn,
-    dispatch => {
+    (dispatch) => {
       setTimeout(() => {
         act(() => {
           const action = {type: 'increment'};
@@ -201,7 +207,7 @@ test('Verify initialState sets returned value when the passed callback and then 
         });
       }, 0);
       return store;
-    }
+    },
   );
   function useTestState() {
     const state = useSelector();
@@ -210,7 +216,7 @@ test('Verify initialState sets returned value when the passed callback and then 
   }
   const {result} = renderHook(useTestState, {wrapper});
   expect(result.current.state).toBe(value1);
-  await new Promise(resolve => setTimeout(resolve, 0));
+  await new Promise((resolve) => setTimeout(resolve, 0));
   expect(typeof result.current.state).toBe('object');
   expect(result.current.state).toBe(value2);
 });
@@ -224,7 +230,7 @@ test('Verify useSelector returns only the selected state', () => {
   }
   const {result} = renderHook(useTestState, {
     wrapper,
-    initialProps: state => state.vehicle,
+    initialProps: (state) => state.vehicle,
   });
   const {state} = result.current;
   expect(state).toBe(vehicleObj);
@@ -245,7 +251,7 @@ test('Verify useSelector causes rerender only when the selected state has change
   const {result} = renderHook(useTestState, {
     wrapper,
     initialProps: {
-      selector: state => state.vehicle,
+      selector: (state) => state.vehicle,
       equalityFn: (curr, next) => curr?.name === next?.name,
     },
   });
@@ -258,14 +264,14 @@ test('Verify useSelector causes rerender only when the selected state has change
     dispatch({
       type: 'update-vehicle',
       value: vehicleObj2,
-    })
+    }),
   );
   expect(count).toBe(2);
   act(() =>
     dispatch({
       type: 'update-vehicle',
       value: vehicleObj3,
-    })
+    }),
   );
   act(() => dispatch({type: 'abort-update'}));
   /*
@@ -334,7 +340,7 @@ test('Verify useSelector causes rerender according to the equalityFn result', ()
   renderHook(useTestState, {
     wrapper,
     initialProps: {
-      selector: state => state.count,
+      selector: (state) => state.count,
       equalityFn: () => equalityFnResult,
     },
   });
@@ -348,7 +354,7 @@ test('Verify useSelector causes rerender according to the equalityFn result', ()
     dispatch({
       type: 'update-vehicle',
       value: vehicleObj2,
-    })
+    }),
   );
   expect(count).toBe(3);
 });
@@ -370,7 +376,7 @@ test('Verify timeVaryingFn limits rerenders', () => {
     initialProps: {
       selector: null,
       equalityFn: null,
-      timeVaryingFn: fn => {
+      timeVaryingFn: (fn) => {
         let callCount = 0;
         return (...args) => {
           if (++callCount % 3 === 0) {

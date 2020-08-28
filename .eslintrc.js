@@ -6,5 +6,5 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  extends: [require.resolve('eslint-config-fusion')],
+  extends: [require.resolve("eslint-config-fusion")],
 };

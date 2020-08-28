@@ -25,7 +25,7 @@ const wrapper = ({children}) => (
 );
 
 test('Verify referential integrity of callback between multiple different call positions', () => {
-  const useTestCallback = createCommonHook(variable => {
+  const useTestCallback = createCommonHook((variable) => {
     return useCommonCallback(() => {
       variable;
     }, [variable]);
@@ -37,7 +37,7 @@ test('Verify referential integrity of callback between multiple different call p
 });
 
 test('Verify callback changes/refreshes as args change', () => {
-  const useTestCallback = createCommonHook(variable => {
+  const useTestCallback = createCommonHook((variable) => {
     return useCommonCallback(() => {
       variable;
     }, [variable]);

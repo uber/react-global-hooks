@@ -5,12 +5,11 @@
  *
  */
 
-
 // @flow
 import {useStoreMap} from './provider';
 
 export default function createCommonCallback(
-  name = 'useCommonCallback'
+  name = 'useCommonCallback',
 ): Function {
   const symbol = Symbol(name);
   return function useCommonCallback<T>(fn: T, args: Array<any> = []): T {
