@@ -20,7 +20,7 @@ import {
 } from '@uber/react-global-hooks';
 
 const [useGetFib, useSetFib] = createSharedState({prev: 0, curr: 1});
-export {useGetFib}
+export {useGetFib};
 
 export const useFibonocciOnMove = createCommonHook(() => {
   const setFibonocci = useSetFib();
@@ -37,7 +37,6 @@ export const useFibonocciOnMove = createCommonHook(() => {
   }, [handleMouseMove]);
 });
 
-
 // components/fibonocci.js
 import {useGetFib, useFibonocciOnMove} from '../hooks/use-fibonocci';
 
@@ -50,7 +49,7 @@ export const Fib = () => {
 const selectCurrent = ({curr}) => curr;
 
 // Debounce rerenders with 500ms delay
-const debounce = fn => _.debounce(fn, 500);
+const debounce = (fn) => _.debounce(fn, 500);
 
 export const ShowFibDebounced = () => {
   const fib = useGetFib(selectCurrent, null, debounce);
@@ -154,16 +153,16 @@ Returns `useSelector` and `useSetState` hooks.
 ```js
 type CreateSharedState = (
   InitialState | LazyInitialState,
-  ?DebugName
+  ?DebugName,
 ) => [UseSelector, UseDispatch];
-type LazyInitialState = Dispatch => InitialState;
+type LazyInitialState = (Dispatch) => InitialState;
 type UseSelector = (?Selector, ?EqualityFn, ?TimeVaryingFn) => SelectedState;
-type Selector = NextState => SelectedState;
+type Selector = (NextState) => SelectedState;
 type EqualityFn = (CurrentState, NextState) => boolean;
-type TimeVaryingFn = Function => Function;
+type TimeVaryingFn = (Function) => Function;
 type UseDispatch = () => Dispatch;
 type Dispatch = (State | LazyState) => void;
-type LazyState = CurrentState => NextState;
+type LazyState = (CurrentState) => NextState;
 type DebugName = string;
 ```
 
@@ -256,18 +255,18 @@ Returns `useSelector` and `useDispatch` hooks.
 type CreateSharedReducer = (
   Reducer,
   InitialState | LazyInitialState,
-  ?DebugName
+  ?DebugName,
 ) => [UseSelector, UseDispatch];
 type Reducer = (CurrentState, Action) => NextState;
 type Action = Object;
-type LazyInitialState = Dispatch => InitialState;
+type LazyInitialState = (Dispatch) => InitialState;
 type UseSelector = (?Selector, ?EqualityFn, ?TimeVaryingFn) => SelectedState;
-type Selector = NextState => SelectedState;
+type Selector = (NextState) => SelectedState;
 type EqualityFn = (CurrentState, NextState) => boolean;
-type TimeVaryingFn = Function => Function;
+type TimeVaryingFn = (Function) => Function;
 type UseDispatch = () => Dispatch;
-type Dispatch = Action => void;
-type LazyState = CurrentState => NextState;
+type Dispatch = (Action) => void;
+type LazyState = (CurrentState) => NextState;
 type DebugName = string;
 ```
 
@@ -510,7 +509,7 @@ Provides a referentially stable ref across all call stacks of the enclosing hook
 `useCommonRef` is useful for creating refs that are watched by other common hooks.
 
 ```js
-type useCommonRef = Value => Ref;
+type useCommonRef = (Value) => Ref;
 type Value = any;
 type Ref = {current: Value};
 ```
@@ -532,8 +531,8 @@ Provides a common state and setState. This API is identical to React's useState.
 
 ```js
 type useCommonState = (State | LazyState) => [State, SetState];
-type LazyState = SetState => NextState;
-type SetState = State => NextState;
+type LazyState = (SetState) => NextState;
+type SetState = (State) => NextState;
 ```
 
 ```js
@@ -554,7 +553,7 @@ Need a hook that doesn't exist? You can register your own with `hookFactory` to 
 To use `hookFactory` the callback must take the shape of `() => Function`.
 
 ```js
-type HookFactory = CreateHook => CommonHook;
+type HookFactory = (CreateHook) => CommonHook;
 type CreateHook = () => Hook;
 type CommonHook = Hook;
 type Hook = Function;
@@ -563,15 +562,13 @@ type Hook = Function;
 ```js
 import {hookFactory} from '@uber/react-global-hooks';
 
-const useDebounced = hookFactory(
-  function createDebouncedHook() {
-    let timeout;
-    return function useDebounced(fn, value) {
-      clearTimeout(timeout);
-      timeout = setTimeout(fn, value);
-    }
-  }
-);
+const useDebounced = hookFactory(function createDebouncedHook() {
+  let timeout;
+  return function useDebounced(fn, value) {
+    clearTimeout(timeout);
+    timeout = setTimeout(fn, value);
+  };
+});
 
 const useHookA = createCommonHook((a, b, c) => {
   useDebounced(a);
