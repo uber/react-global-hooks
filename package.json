@@ -1,5 +1,5 @@
 {
-  "name": "@uber/react-global-hooks",
+  "name": "react-global-hooks",
   "version": "1.0.0",
   "description": "A library allowing to share state across react components ",
   "private": true,
