@@ -27,7 +27,7 @@ const wrapper = ({children}) => (
 test('Verify callback execution occurs only when expected (on first component mount, on args change)', () => {
   let count = 0;
   let variable = 0;
-  const useTestEffect = createCommonHook(variable => {
+  const useTestEffect = createCommonHook((variable) => {
     useCommonEffect(() => {
       count++;
     }, [variable]);
@@ -52,7 +52,7 @@ test('Verify callback execution occurs only when expected (on first component mo
 test('Verify cleanup function occurs only when expected (on last component unmount, on args change)', () => {
   let cleanup = 0;
   let variable = 0;
-  const useTestEffect = createCommonHook(variable => {
+  const useTestEffect = createCommonHook((variable) => {
     useCommonEffect(() => {
       return () => cleanup++;
     }, [variable]);

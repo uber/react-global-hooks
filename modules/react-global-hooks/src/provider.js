@@ -5,7 +5,6 @@
  *
  */
 
-
 // @flow
 
 /* globals __RGH_DEVTOOLS__ */

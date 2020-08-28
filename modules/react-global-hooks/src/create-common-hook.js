@@ -5,7 +5,6 @@
  *
  */
 
-
 // @flow
 
 /* globals __RGH_DEVTOOLS__ */
@@ -24,7 +23,7 @@ export class Scope {
 
 function createCommonHook<T>(
   fn: Hook<T>,
-  name: ?string = fn.name || 'useCommonHook'
+  name: ?string = fn.name || 'useCommonHook',
 ): SharedHook<T> {
   const symbol = Symbol(name);
   return (...args): T => {

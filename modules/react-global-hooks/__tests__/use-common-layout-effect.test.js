@@ -27,7 +27,7 @@ const wrapper = ({children}) => (
 test('Verify callback execution occurs only when expected (on first component mount, on args change)', () => {
   let count = 0;
   let variable = 0;
-  const useTestLayoutEffect = createCommonHook(variable => {
+  const useTestLayoutEffect = createCommonHook((variable) => {
     useCommonLayoutEffect(() => {
       count++;
     }, [variable]);
@@ -52,7 +52,7 @@ test('Verify callback execution occurs only when expected (on first component mo
 test('Verify cleanup function occurs only when expected (on last component unmount, on args change)', () => {
   let cleanup = 0;
   let variable = 0;
-  const useTestLayoutEffect = createCommonHook(variable => {
+  const useTestLayoutEffect = createCommonHook((variable) => {
     useCommonLayoutEffect(() => {
       return () => cleanup++;
     }, [variable]);
@@ -62,7 +62,7 @@ test('Verify cleanup function occurs only when expected (on last component unmou
     {
       wrapper,
       initialProps: variable,
-    }
+    },
   );
   expect(cleanup).toBe(0);
   const {rerender: rerender2, unmount: unmount2} = renderHook(
@@ -70,7 +70,7 @@ test('Verify cleanup function occurs only when expected (on last component unmou
     {
       wrapper,
       initialProps: variable,
-    }
+    },
   );
   expect(cleanup).toBe(0);
   variable++;

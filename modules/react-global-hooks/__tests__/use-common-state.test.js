@@ -31,7 +31,7 @@ const wrapper = ({children}) => (
 
 test('Verify referential integrity of state and setState across call positions and renders', () => {
   let value = {};
-  const useTestState = createCommonHook(value => {
+  const useTestState = createCommonHook((value) => {
     const [state, setState] = useCommonState(value);
     return {state, setState};
   });
@@ -58,7 +58,7 @@ test('Verify referential integrity of state and setState across call positions a
 test('Verify setState causes one rerender per call position', () => {
   let count = 0;
   let value = 0;
-  const useTestState = createCommonHook(value => {
+  const useTestState = createCommonHook((value) => {
     count++;
     const [state, setState] = useCommonState(value);
     return {state, setState};
@@ -81,7 +81,7 @@ test('Verify setState causes one rerender per call position', () => {
 
 test('Verify no rerenders are triggered when returning current state from a setState callback', () => {
   let count = 0;
-  const useTestState = createCommonHook(value => {
+  const useTestState = createCommonHook((value) => {
     count++;
     const [state, setState] = useCommonState(value);
     return {state, setState};
@@ -97,12 +97,12 @@ test('Verify no rerenders are triggered when returning current state from a setS
   });
   expect(count).toBe(2);
   const {setState} = result.current;
-  act(() => setState(state => state));
+  act(() => setState((state) => state));
   expect(count).toBe(2);
 });
 
 test('Verify setState passes current state as prop when passed a callback', () => {
-  const useTestState = createCommonHook(value => {
+  const useTestState = createCommonHook((value) => {
     const [state, setState] = useCommonState(value);
     return {state, setState};
   });
@@ -117,23 +117,23 @@ test('Verify setState passes current state as prop when passed a callback', () =
   const {state, setState} = result.current;
   let stateArg;
   act(() =>
-    setState(state => {
+    setState((state) => {
       stateArg = state;
       return state;
-    })
+    }),
   );
   expect(stateArg).toBe(state);
 });
 
 test('Verify initialState passes setState as prop when passed a callback', () => {
   let setStateArg;
-  const useTestState = createCommonHook(value => {
+  const useTestState = createCommonHook((value) => {
     const [state, setState] = useCommonState(value);
     return {state, setState};
   });
   const {result} = renderHook(useTestState, {
     wrapper,
-    initialProps: setState => {
+    initialProps: (setState) => {
       setStateArg = setState;
       return 0;
     },
@@ -144,7 +144,7 @@ test('Verify initialState passes setState as prop when passed a callback', () =>
 
 test('Verify initialState initializes with returned value when passed a callback', () => {
   const value = {};
-  const useTestState = createCommonHook(value => {
+  const useTestState = createCommonHook((value) => {
     const [state, setState] = useCommonState(value);
     return {state, setState};
   });
@@ -160,22 +160,22 @@ test('Verify initialState sets returned value when the passed callback and then 
   const value1 = 0;
   const value2 = 1;
   expect.assertions(2);
-  const useTestState = createCommonHook(value => {
+  const useTestState = createCommonHook((value) => {
     const [state, setState] = useCommonState(value);
     return {state, setState};
   });
   const {result} = renderHook(useTestState, {
     wrapper,
-    initialProps: setState => {
+    initialProps: (setState) => {
       setTimeout(() => {
         act(() => {
-          setState(state => state + 1);
+          setState((state) => state + 1);
         });
       }, 0);
       return value1;
     },
   });
   expect(result.current.state).toBe(value1);
-  await new Promise(resolve => setTimeout(resolve, 0));
+  await new Promise((resolve) => setTimeout(resolve, 0));
   expect(result.current.state).toBe(value2);
 });

@@ -5,7 +5,6 @@
  *
  */
 
-
 // @flow
 
 // Verify referential integrity of state and setState across call positions and renders
@@ -107,7 +106,7 @@ test('Verify no rerenders are triggered when returning current state from a setS
   renderHook(useTestState2, {wrapper});
   expect(count2).toBe(1);
   const {setState} = result1.current;
-  act(() => setState(state => state));
+  act(() => setState((state) => state));
   expect(count1).toBe(1);
   expect(count2).toBe(1);
 });
@@ -124,17 +123,17 @@ test('Verify setState passes current state as prop when passed a callback', () =
   const {state, setState} = result.current;
   let stateArg;
   act(() =>
-    setState(state => {
+    setState((state) => {
       stateArg = state;
       return state;
-    })
+    }),
   );
   expect(stateArg).toBe(state);
 });
 
 test('Verify initialState passes setState as prop when passed a callback', () => {
   let setStateArg;
-  const [useSelector, useSetState] = createSharedState(setState => {
+  const [useSelector, useSetState] = createSharedState((setState) => {
     setStateArg = setState;
     return 0;
   });
@@ -150,7 +149,7 @@ test('Verify initialState passes setState as prop when passed a callback', () =>
 
 test('Verify initialState initializes with returned value when passed a callback', () => {
   const value = {};
-  const [useSelector, useSetState] = createSharedState(setState => {
+  const [useSelector, useSetState] = createSharedState((setState) => {
     return value;
   });
   function useTestState() {
@@ -167,10 +166,10 @@ test('Verify initialState sets returned value when the passed callback and then 
   const value1 = 0;
   const value2 = 1;
   expect.assertions(2);
-  const [useSelector, useSetState] = createSharedState(setState => {
+  const [useSelector, useSetState] = createSharedState((setState) => {
     setTimeout(() => {
       act(() => {
-        setState(state => state + 1);
+        setState((state) => state + 1);
       });
     }, 0);
     return value1;
@@ -182,7 +181,7 @@ test('Verify initialState sets returned value when the passed callback and then 
   }
   const {result} = renderHook(useTestState, {wrapper});
   expect(result.current.state).toBe(value1);
-  await new Promise(resolve => setTimeout(resolve, 0));
+  await new Promise((resolve) => setTimeout(resolve, 0));
   expect(result.current.state).toBe(value2);
 });
 
@@ -205,7 +204,7 @@ test('Verify useSelector returns only the selected state', () => {
   }
   const {result} = renderHook(useTestState, {
     wrapper,
-    initialProps: state => state.vehicle,
+    initialProps: (state) => state.vehicle,
   });
   const {state} = result.current;
   expect(state).toBe(vehicleObj);
@@ -246,27 +245,27 @@ test('Verify useSelector causes rerender only when the selected state has change
   const {result} = renderHook(useTestState, {
     wrapper,
     initialProps: {
-      selector: state => state.vehicle,
+      selector: (state) => state.vehicle,
       equalityFn: (curr, next) => curr?.name === next?.name,
     },
   });
   expect(count).toBe(1);
-  act(() => setState(state => state));
+  act(() => setState((state) => state));
   expect(count).toBe(1);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(1);
   act(() =>
-    setState(state => ({
+    setState((state) => ({
       ...state,
       vehicle: vehicleObj2,
-    }))
+    })),
   );
   expect(count).toBe(2);
   act(() =>
-    setState(state => ({
+    setState((state) => ({
       ...state,
       vehicle: vehicleObj3,
-    }))
+    })),
   );
   /*
     Issue with react-test-renderer causes an unnecessary rerender which causes
@@ -359,21 +358,21 @@ test('Verify useSelector causes rerender according to the equalityFn result', ()
   renderHook(useTestState, {
     wrapper,
     initialProps: {
-      selector: state => state.count,
+      selector: (state) => state.count,
       equalityFn: () => equalityFnResult,
     },
   });
   expect(count).toBe(1);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(1);
   equalityFnResult = false;
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(2);
   act(() =>
-    setState(state => ({
+    setState((state) => ({
       ...state,
       vehicle: vehicleObj2,
-    }))
+    })),
   );
   expect(count).toBe(3);
 });
@@ -405,7 +404,7 @@ test('Verify timeVaryingFn limits rerenders', () => {
     initialProps: {
       selector: null,
       equalityFn: null,
-      timeVaryingFn: fn => {
+      timeVaryingFn: (fn) => {
         let callCount = 0;
         return (...args) => {
           if (++callCount % 3 === 0) {
@@ -417,22 +416,22 @@ test('Verify timeVaryingFn limits rerenders', () => {
   });
   expect(count).toBe(1);
   expect(result.current.count).toBe(0);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(1);
   expect(result.current.count).toBe(0);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(1);
   expect(result.current.count).toBe(0);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(2);
   expect(result.current.count).toBe(3);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(2);
   expect(result.current.count).toBe(3);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(2);
   expect(result.current.count).toBe(3);
-  act(() => setState(state => ({...state, count: state.count + 1})));
+  act(() => setState((state) => ({...state, count: state.count + 1})));
   expect(count).toBe(3);
   expect(result.current.count).toBe(6);
 });

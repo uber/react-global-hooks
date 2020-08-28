@@ -1,11 +1,6 @@
 {
-  "name": "@uber/react-global-hooks",
+  "name": "react-global-hooks",
   "description": "react hooks that can be shared between components and other hooks or provide a common behavior in a custom hook that is shared between components and other hooks",
-  "author": "David Maskasky <dmaskask@uber.com>",
-  "contributors": [
-    "David Maskasky <dmaskask@uber.com>",
-    "Georgios Karnas <georgios@uber.com>"
-  ],
   "version": "0.2.4",
   "license": "MIT",
   "main": "./dist-node-cjs/index.js",

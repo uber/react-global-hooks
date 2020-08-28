@@ -5,7 +5,6 @@
  *
  */
 
-
 // @flow
 import createSharedState from './create-shared-state';
 import {useStoreMap} from './provider';
