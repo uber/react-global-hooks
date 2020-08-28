@@ -1,12 +1,7 @@
 {
-  "name": "@uber/react-global-hooks",
+  "name": "react-global-hooks",
   "description": "react hooks that can be shared between components and other hooks or provide a common behavior in a custom hook that is shared between components and other hooks",
-  "author": "David Maskasky <dmaskask@uber.com>",
-  "contributors": [
-    "David Maskasky <dmaskask@uber.com>",
-    "Georgios Karnas <georgios@uber.com>"
-  ],
-  "version": "0.2.4",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "./dist-node-cjs/index.js",
   "module": "./dist-node-esm/index.js",
@@ -27,7 +22,8 @@
     "cup-build-tests": "cup build-tests",
     "cup-clean": "cup clean",
     "prepublish": "cup-build",
-    "publish": "npm publish"
+    "publish": "npm publish",
+    "test": "yarn prettier --check ."
   },
   "peerDependencies": {
     "react": "^16.13.1"
